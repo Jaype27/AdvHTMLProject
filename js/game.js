@@ -15,13 +15,9 @@ var isBallIn = true;
 
 gameScene.init = function() {
 
- this.paddleSpeed = 200; // paddle speed
+ this.paddleSpeed = 100; // paddle speed
+ // this.ballSpeed = 7; // ball speed
  
- this.ballSpeed = 7; // ball speed
- this.ballMaxX = 640; // maximum boundary; horizontal
- this.ballMinX = 0; // minimum boundary; horizontal
- this.ballMaxY = 360; // maximum boundary; vertical
- this.ballMinY = 0; // minimum boundary; vertical
 
 }
 
@@ -43,7 +39,7 @@ gameScene.create = function() {
 	this.paddle.body.immovable = true;
 	
 	// BALL
-	this.ball = this.physics.add.sprite(this.sys.game.config.width / 2, 510, 'ball');
+	this.ball = this.physics.add.sprite(this.sys.game.config.width / 2, 440, 'ball');
 	this.ball.setVelocity(0, 0);
 	this.ball.setBounce(1, 1);
 	this.ball.setScale(0.5);
@@ -89,7 +85,7 @@ gameScene.create = function() {
 
 	// COLLISIONS
 	this.physics.add.collider(this.paddle, this.ball, this.hitPaddle, null, this);
-	// this.physics.add.overlap(this.bricks, this.ball);
+	
 	this.physics.add.collider(this.ball, this.bricks, this.hitBrick, null, this);
 	this.physics.add.collider(this.ball, this.bricks1, this.hitBrick, null, this);
 	this.physics.add.collider(this.ball, this.bricks2, this.hitBrick, null, this);
@@ -121,14 +117,16 @@ gameScene.restart = function() {
 		
 		isBallIn = false;
 		ballOnPaddle = true;
-		this.ball.enableBody(true, this.sys.game.config.width / 2, 510, true, true);
+		
+		this.ball.enableBody(true, this.sys.game.config.width / 2, 440, true, true);
 	
 		this.bricks.children.iterate(function(child) {
 			child.enableBody(true, child.x, child.y, true, true);
-});
+		});
+		
 		this.bricks1.children.iterate(function(child) {
 		child.enableBody(true, child.x, child.y, true, true);
-	});
+		});
 
 		this.bricks2.children.iterate(function(child) {
 		child.enableBody(true, child.x, child.y, true, true);
@@ -136,13 +134,14 @@ gameScene.restart = function() {
 
 		score = 0;
 		scoreText.setText('Score: ' + score);
+  	
   	}, [], this);
 }
 
 gameScene.releaseBall = function() {
 	if(ballOnPaddle) {
 		ballOnPaddle = false;
-		this.ball.setVelocity(200, 200);
+		this.ball.setVelocity(300, 300);
 	}
 }
 
@@ -153,7 +152,7 @@ gameScene.hitBrick = function(ball, brick) {
 	score += 50;
 	scoreText.setText('Score: ' + score);
 	
-	this.ball.setVelocity(200, 200);
+	this.ball.setVelocity(300, 300);
 
 	
 	if(this.bricks.countActive(true) + this.bricks1.countActive(true) + this.bricks2.countActive(true) === 0) {
