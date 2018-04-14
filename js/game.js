@@ -125,18 +125,24 @@ gameScene.restart = function() {
 	
 		this.bricks.children.iterate(function(child) {
 			child.enableBody(true, child.x, child.y, true, true);
+});
+		this.bricks1.children.iterate(function(child) {
+		child.enableBody(true, child.x, child.y, true, true);
+	});
+
+		this.bricks2.children.iterate(function(child) {
+		child.enableBody(true, child.x, child.y, true, true);
 		});
 
 		score = 0;
 		scoreText.setText('Score: ' + score);
-		console.log(this.score);
   	}, [], this);
 }
 
 gameScene.releaseBall = function() {
 	if(ballOnPaddle) {
 		ballOnPaddle = false;
-		this.ball.setVelocity(400, 400);
+		this.ball.setVelocity(200, 200);
 	}
 }
 
@@ -147,9 +153,10 @@ gameScene.hitBrick = function(ball, brick) {
 	score += 50;
 	scoreText.setText('Score: ' + score);
 	
-	this.ball.setVelocity(500, 500);
+	this.ball.setVelocity(200, 200);
 
-	if(this.bricks.countActive(true) && this.bricks1.countActive(true) && this.bricks2.countActive(true) === 0) {
+	
+	if(this.bricks.countActive(true) + this.bricks1.countActive(true) + this.bricks2.countActive(true) === 0) {
 		this.bricks.children.iterate(function(child) {
 			child.enableBody(true, child.x, child.y, true, true);
 		});
